@@ -2,13 +2,38 @@
 	<div>
 		<ion-header>
 			<ion-toolbar>
-				<ion-title>{{ title }}</ion-title>
+				<ion-title>{{ task_info.id }}번째 할 일</ion-title>
 			</ion-toolbar>
 		</ion-header>
-		<ion-content class="ion-padding">
-			{{ content }}
+
+		<ion-content fullscreen>
+			<ion-list class="full">
+				<ion-item-divider>
+					<ion-label>
+						Todo Detail
+					</ion-label>
+				</ion-item-divider>
+
+				<ion-item>
+					<ion-label>Todo Name : {{ task_info.title }}</ion-label>
+				</ion-item>
+				<ion-item>
+					<ion-label>Deadline : {{ task_info.deadline }}</ion-label>
+				</ion-item>
+				<ion-item>
+					<ion-label>Completed : {{ task_info.completed }}</ion-label>
+				</ion-item>
+
+				<ion-item-divider>
+					<ion-label>Description</ion-label>
+				</ion-item-divider>
+				<ion-item>
+					{{ task_info.description }}
+				</ion-item>
+
+			</ion-list>
 		</ion-content>
-			update
+
 		<ion-button color="primary" @click="closeModal">Back</ion-button>
 	</div>
 </template>
@@ -16,14 +41,6 @@
 <script>
 export default {
 	name: 'InfoModal',
-	props: {
-		title: { type: String, default: 'Super Modal' },
-	},
-	data() {
-		return {
-			content: 'Content',
-		}
-	},
 	methods: {
 		closeModal() {
 			return this.$ionic.modalController.dismiss()
