@@ -1,13 +1,13 @@
 <template>
     <div>
-        <Toolbar />
+        <Toolbar :access_token="userinfo.access_token" :session_id="userinfo.session_id"/>
         <List :access_token="userinfo.access_token" />
         <RefreshBtn />
     </div>
 </template>
 
 <script>
-import Toolbar from '../components/Task/Toolbar';
+import Toolbar from '../components/Task/TaskToolbar/Toolbar';
 import List from '../components/Task/List';
 import RefreshBtn from '../components/Task/RefreshBtn';
 
