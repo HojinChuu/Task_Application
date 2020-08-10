@@ -1,4 +1,4 @@
-# todolist_pwa
+# task app
 
 ## Project setup
 ```
