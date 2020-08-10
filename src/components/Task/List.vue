@@ -22,11 +22,25 @@
 </template>
 
 <script>
+import axios from 'axios';
 import InfoModal from './InfoModal';
 
 export default {
 	name: "List",
 	components: { InfoModal },
+	props: ['access_token'],
+	data() {
+		return {
+			tasks: {}
+		}
+	},
+	async mounted() {
+		const headers = {'Authorization': this.access_token};
+		const response = await axios.get("http://localhost/restapi/tasks", { headers });
+
+		this.tasks = await response.data.data;
+		console.log(this.tasks);
+	},
 	methods: {
 	openModal() {
 		return this.$ionic.modalController
@@ -34,17 +48,11 @@ export default {
 				component: InfoModal,
 				cssClass: 'my-custom-class',
 				componentProps: {
-					data: {
-					content: 'New Content',
-					},
-					propsData: {
-					title: 'New title',
-					},
-				},
-			})
-			.then(m => m.present())
-		},
-	},
-    
+					data: { content: 'New Content' },
+					propsData: { title: 'New title' }
+				}
+			}).then(m => m.present())
+		}
+	}
 }
 </script>

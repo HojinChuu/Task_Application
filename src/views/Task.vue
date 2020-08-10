@@ -1,7 +1,7 @@
 <template>
     <div>
         <Toolbar />
-        <List />
+        <List :access_token="userinfo.access_token" />
         <RefreshBtn />
     </div>
 </template>
@@ -13,6 +13,14 @@ import RefreshBtn from '../components/Task/RefreshBtn';
 
 export default {
     name: "Task",
-    components: { Toolbar, List, RefreshBtn }
+    components: { Toolbar, List, RefreshBtn },
+    data() {
+        return {
+            userinfo: {}
+        }
+    },
+    created(){
+        this.userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+    }
 }
 </script>

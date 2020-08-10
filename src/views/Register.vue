@@ -9,7 +9,7 @@
         <ion-content fullscreen>
             <RegisterForm />
         </ion-content>
-  </div>
+    </div>
 </template>
 
 <script>
