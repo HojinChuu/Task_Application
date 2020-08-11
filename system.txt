@@ -23,9 +23,13 @@ DELETE http://localhost/restapi/sessions/3  - delete session
 (o) 새로고침으로 세션 얻기 - session update
 (o) 로그아웃 - session delete  
 (o) 태스크 수정
+(o) 네비게이션 가드
+(o) PWA
 
 (x) 할일 완료 토글
 (x) 스크롤 로딩
+(x) VUEX
+(x) 알림
 
 [ view (component) ]
 Login ( login form )

@@ -2,13 +2,12 @@
     <ion-item>
         <ion-grid>
             <ion-row>
+				<ion-toggle :checked="completed === true" @ionChange="completedToggle"></ion-toggle>
                 <div @click="openModal" class="ion-padding-start">
-                    <ion-label>{{ task.title }}</ion-label>
+                    <ion-label ref="completedLine">{{ task.title }}</ion-label>
                 </div>
             </ion-row>
         </ion-grid>
-
-		<!-- <ion-checkbox :Checked="isChecked" @input="checked = $event.target.value" color="primary"></ion-checkbox> -->
         <ion-button color="danger" @click="removeTask">				
             <ion-icon name="trash-outline" size="small"></ion-icon>          
         </ion-button>
@@ -25,7 +24,13 @@ export default {
 	props: ['task', 'access_token'],
 	data() {
 		return {
-			isChecked: false,
+			completed: '',
+			sendCompleted : ''
+		}
+	},
+	computed: {
+		completedValue() {
+		 	return this.task.completed === 'Y' ? this.completed = true : this.completed = false;
 		}
 	},
 	methods: {
@@ -53,7 +58,34 @@ export default {
                     
                 this.$router.go()
             })
+		},
+		completedToggle() {
+			const headers = {
+                'Authorization': this.access_token,
+                'Content-Type': 'application/json'
+			};
+
+			this.completed = !this.completed;
+			this.sendCompleted = (this.completed ? 'Y' : 'N');
+			if (this.completed) {
+				this.sendCompleted = 'Y'
+				this.$refs.completedLine.style.textDecoration = "line-through";
+				this.$refs.completedLine.style.textDecorationColor = "#D51818";
+				this.$refs.completedLine.style.textDecorationStyle = "wavy";
+			} else {
+				this.sendCompleted = 'N'
+				this.$refs.completedLine.style.textDecoration = "";
+				this.$refs.completedLine.style.textDecorationColor = "";
+				this.$refs.completedLine.style.textDecorationStyle = "";
+			}
+
+            const data = { completed: this.sendCompleted }
+			
+			axios.patch(`http://localhost/restapi/tasks/${this.task.id}`, data, { headers })
+            .then(response => {
+				console.log(response)
+            })
 		}
-	},
+	}
 }
 </script>
