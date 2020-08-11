@@ -7,4 +7,4 @@
 
 module.exports = {
     lintOnSave: false
-  }
+};

@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <ion-header translucent>
-            <ion-toolbar>
-                <ion-title>Login</ion-title>
-            </ion-toolbar>
-        </ion-header>
+  <div>
+    <ion-header translucent>
+      <ion-toolbar>
+        <ion-title>Login</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-        <ion-content fullscreen>
-            <LoginForm />
-        </ion-content>
-    </div>
+    <ion-content fullscreen>
+      <LoginForm />
+    </ion-content>
+  </div>
 </template>
 
 <script>
-import LoginForm from '../components/Login/LoginForm'
+import LoginForm from "../components/Login/LoginForm";
 
 export default {
-    name: "Login",
-    components: { LoginForm }
-}
+  name: "Login",
+  components: { LoginForm }
+};
 </script>
