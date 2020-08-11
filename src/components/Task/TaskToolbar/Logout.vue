@@ -1,6 +1,6 @@
 <template>
     <ion-button @click="logout">
-        <small>Logout</small>
+        <small>LOGOUT</small>
     </ion-button>
 </template>
 

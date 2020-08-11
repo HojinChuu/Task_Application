@@ -1,19 +1,27 @@
 <template>
-    <ion-button @click="createTask">
+    <ion-button @click="openModal">
         <ion-icon name="add-circle-outline" size="small"></ion-icon>
-        <small>Add Task</small>
+        <small>ADD TASK</small>
     </ion-button>
 </template>
 
 <script>
-import axios from 'axios';
+import AddModal from './AddModal';
 
 export default {
     name: "Add",
+    components: { AddModal },
     props: ['access_token'],
     methods: {
         createTask() {
             console.log('asdf')
+        },
+        openModal() {
+            return this.$ionic.modalController.create({
+                component: AddModal,
+                cssClass: 'my-custom-class',
+                componentProps: { data: { access_token: this.access_token } }
+            }).then(m => m.present())
         }
     }
 }

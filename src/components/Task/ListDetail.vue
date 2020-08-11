@@ -2,14 +2,12 @@
     <ion-item>
         <ion-grid>
             <ion-row>
-                <div @click="openModal">
+                <ion-toggle color="primary"></ion-toggle>
+                <div @click="openModal" class="ion-padding-start">
                     <ion-label>{{ task.title }}</ion-label>
                 </div>
             </ion-row>
         </ion-grid>
-        <ion-button color="medium">				
-            <ion-icon name="checkbox-outline" size="small"></ion-icon>
-        </ion-button>
         <ion-button color="danger">				
             <ion-icon name="trash-outline" size="small"></ion-icon>          
         </ion-button>

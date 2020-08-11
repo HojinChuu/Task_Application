@@ -34,19 +34,6 @@ export default {
 		this.tasks_count = await response.data.data.rows_returned;
 
 		console.log(this.tasks);
-	},
-	methods: {
-	openModal() {
-		return this.$ionic.modalController
-			.create({
-				component: InfoModal,
-				cssClass: 'my-custom-class',
-				componentProps: {
-					data: { content: 'New Content' },
-					propsData: { title: 'New title' }
-				}
-			}).then(m => m.present())
-		}
 	}
 }
 </script>
