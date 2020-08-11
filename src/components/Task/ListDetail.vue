@@ -2,7 +2,7 @@
     <ion-item>
         <ion-grid>
             <ion-row>
-				<ion-toggle :checked="completed === true" @ionChange="completedToggle"></ion-toggle>
+				<ion-toggle :checked="completedValue" @ionChange="completedToggle"></ion-toggle>
                 <div @click="openModal" class="ion-padding-start">
                     <ion-label ref="completedLine">{{ task.title }}</ion-label>
                 </div>
@@ -32,6 +32,12 @@ export default {
 		completedValue() {
 		 	return this.task.completed === 'Y' ? this.completed = true : this.completed = false;
 		}
+	},
+	mounted() {
+		if (this.task.completed === 'Y')
+			this.$refs.completedLine.style.textDecoration = "line-through";
+			this.$refs.completedLine.style.textDecorationColor = "#D51818";
+			this.$refs.completedLine.style.textDecorationStyle = "wavy";
 	},
 	methods: {
 	    openModal() {

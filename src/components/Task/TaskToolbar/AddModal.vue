@@ -51,7 +51,7 @@ export default {
         }
     },
 	methods: {
-        onSubmit(e) {
+        async onSubmit(e) {
             e.preventDefault();
             this.deadline = moment(e.target[2].defaultValue).format('DD/MM/YYYY HH:mm');
 
@@ -67,21 +67,21 @@ export default {
                 completed: "N"
             }
 
-            axios.post('http://localhost/restapi/tasks', data, {headers})
-            .then((response) => {
-                this.$ionic.alertController.create({
+            const response = await axios.post('http://localhost/restapi/tasks', data, {headers});
+            
+            this.$ionic.alertController.create({
                     header: "Good !",
                     message: "새로운 Task를 만들었습니다.", 
                     buttons: ["OK"]}).then(a => a.present());
-
-                this.$ionic.modalController.dismiss()
-            }).then(() => {
-                this.$router.go();
-            })
+            this.$ionic.modalController.dismiss()
+            // await this.$router.go();
+            setTimeout(() => {
+                history.go()
+            }, 500);
         },
         closeModal() {
 			return this.$ionic.modalController.dismiss()
-		},
+		}
 	}
 }
 </script>
