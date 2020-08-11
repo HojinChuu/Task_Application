@@ -34,7 +34,10 @@ export default {
 				component: InfoModal,
 				cssClass: 'my-custom-class',
 				componentProps: {
-					data: { task_info: this.task },
+					data: { 
+						task_info: this.task,
+						access_token: this.access_token
+					},
 				}
 			}).then(m => m.present())
 		},

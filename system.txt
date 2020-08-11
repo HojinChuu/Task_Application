@@ -22,8 +22,9 @@ DELETE http://localhost/restapi/sessions/3  - delete session
 (o) 홈화면위에 필터 - incompleted, completed 
 (o) 새로고침으로 세션 얻기 - session update
 (o) 로그아웃 - session delete  
+(o) 태스크 수정
 
-(x) 태스크 수정
+(x) 할일 완료 토글
 (x) 스크롤 로딩
 
 [ view (component) ]

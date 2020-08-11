@@ -26,6 +26,7 @@
                 </div>
             </form>
         </ion-content>
+		<ion-button color="secondary" @click="closeModal">Back</ion-button>
 	</div>
 </template>
 
@@ -77,7 +78,10 @@ export default {
             }).then(() => {
                 this.$router.go();
             })
-        }
+        },
+        closeModal() {
+			return this.$ionic.modalController.dismiss()
+		},
 	}
 }
 </script>

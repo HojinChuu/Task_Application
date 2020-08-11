@@ -31,12 +31,11 @@
 
 <script>
 import axios from 'axios';
-import InfoModal from './InfoModal';
 import ListDetail from './ListDetail';
 
 export default {
 	name: "List",
-	components: { InfoModal, ListDetail},
+	components: { ListDetail},
 	props: ['access_token'],
 	data() {
 		return {
