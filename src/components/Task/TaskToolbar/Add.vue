@@ -13,9 +13,6 @@ export default {
     components: { AddModal },
     props: ['access_token'],
     methods: {
-        createTask() {
-            console.log('asdf')
-        },
         openModal() {
             return this.$ionic.modalController.create({
                 component: AddModal,
