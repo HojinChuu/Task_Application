@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Toolbar :access_token="userinfo.access_token" :session_id="userinfo.session_id"/>
+        <Toolbar :access_token="userinfo.access_token" :session_id="userinfo.session_id" />
         <List :access_token="userinfo.access_token" />
         <RefreshBtn />
     </div>

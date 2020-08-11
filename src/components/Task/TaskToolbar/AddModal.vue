@@ -74,7 +74,8 @@ export default {
                     buttons: ["OK"]}).then(a => a.present());
 
                 this.$ionic.modalController.dismiss()
-                this.$router.push({ name: 'Task' })
+            }).then(() => {
+                this.$router.go();
             })
         }
 	}

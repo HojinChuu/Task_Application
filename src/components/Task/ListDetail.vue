@@ -8,19 +8,20 @@
                 </div>
             </ion-row>
         </ion-grid>
-        <ion-button color="danger">				
+        <ion-button color="danger" @click="removeTask">				
             <ion-icon name="trash-outline" size="small"></ion-icon>          
         </ion-button>
     </ion-item>
 </template>
 
 <script>
+import axios from 'axios';
 import InfoModal from './InfoModal';
 
 export default {
 	name: "ListDetail",
 	components: { InfoModal },
-	props: ['task'],
+	props: ['task', 'access_token'],
 	methods: {
 	    openModal() {
 		    return this.$ionic.modalController.create({
@@ -30,6 +31,19 @@ export default {
 					data: { task_info: this.task },
 				}
 			}).then(m => m.present())
+		},
+		removeTask() {
+			const headers = {'Authorization': this.access_token};
+
+            axios.delete(`http://localhost/restapi/tasks/${this.task.id}`, { headers })
+            .then(response => {
+                this.$ionic.alertController.create({
+                    header: "끝 !",
+                    message: "삭제 되었습니다.", 
+                    buttons: ["OK"]}).then(a => a.present());
+                    
+                this.$router.go()
+            })
 		}
 	}
 }

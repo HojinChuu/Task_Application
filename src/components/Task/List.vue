@@ -6,7 +6,10 @@
 				<ion-title><small>할 일을 생성해주세요 . .</small></ion-title>
 			</ion-toolbar>
 			<div v-else>
-				<ListDetail v-for="task in tasks" :key="task.id" :task="task"/>
+				<ListDetail 
+				  v-for="task in tasks" :key="task.id" 
+				  :task="task" :access_token="access_token" 
+				/>
 			</div>
         </ion-list>
     </ion-content>

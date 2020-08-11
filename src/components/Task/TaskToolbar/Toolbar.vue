@@ -5,7 +5,7 @@
                 <Add :access_token="access_token" />
             </ion-buttons>
             <ion-buttons slot="end">
-                <Logout :access_token="access_token"  :session_id="session_id" />
+                <Logout :access_token="access_token" :session_id="session_id" />
             </ion-buttons>
             <ion-title>Task</ion-title> 
         </ion-toolbar>
