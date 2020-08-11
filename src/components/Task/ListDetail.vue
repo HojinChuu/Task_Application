@@ -2,12 +2,13 @@
     <ion-item>
         <ion-grid>
             <ion-row>
-                <ion-toggle color="primary"></ion-toggle>
                 <div @click="openModal" class="ion-padding-start">
                     <ion-label>{{ task.title }}</ion-label>
                 </div>
             </ion-row>
         </ion-grid>
+
+		<!-- <ion-checkbox :Checked="isChecked" @input="checked = $event.target.value" color="primary"></ion-checkbox> -->
         <ion-button color="danger" @click="removeTask">				
             <ion-icon name="trash-outline" size="small"></ion-icon>          
         </ion-button>
@@ -22,6 +23,11 @@ export default {
 	name: "ListDetail",
 	components: { InfoModal },
 	props: ['task', 'access_token'],
+	data() {
+		return {
+			isChecked: false,
+		}
+	},
 	methods: {
 	    openModal() {
 		    return this.$ionic.modalController.create({
@@ -45,6 +51,6 @@ export default {
                 this.$router.go()
             })
 		}
-	}
+	},
 }
 </script>
