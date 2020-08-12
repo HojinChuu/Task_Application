@@ -31,7 +31,7 @@ DELETE http://localhost/restapi/sessions/3  - delete session
 (x) VUEX
 (x) 알림
 
-[ view (component) ]
+[ view (component) ]ㅣ
 Login ( login form )
 Register ( register form )
 Task ( taskInfo(paginate), createtaskbutton, filltercompleted, TaskViewModal )

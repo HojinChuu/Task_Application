@@ -50,7 +50,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions } from 'vuex'
+import showAlert from '../../alert'
 
 export default {
   name: "RegisterForm",
@@ -58,29 +59,25 @@ export default {
     return {
       fullname: "",
       username: "",
-      password: ""
+      password: "",
+      registerData: {}
     };
   },
   methods: {
+    ...mapActions([ 'REGISTER' ]),
+
     onSubmit(e) {
       e.preventDefault();
-      this.fullname == "" || this.username == "" || this.password == ""
-        ? this.showAlert()
-        : this.register();
+
+      (this.fullname == "" || this.username == "" || this.password == "")
+      ? showAlert.error('Oops..', '빈칸을 모두 채워주세요') 
+      : this.register();
 
       this.fullname = "";
       this.username = "";
       this.password = "";
     },
-    showAlert() {
-      return this.$ionic.alertController
-        .create({
-          header: "Warning !",
-          message: "빈칸을 모두 채워주세요",
-          buttons: ["OK"]
-        })
-        .then(a => a.present());
-    },
+
     register() {
       const headers = { "Content-Type": "application/json" };
       const data = {
@@ -89,19 +86,11 @@ export default {
         password: this.password
       };
 
-      axios
-        .post("http://localhost/restapi/users", data, { headers })
-        .then(response => {
-          this.$ionic.alertController
-            .create({
-              header: "Welcome !",
-              message: "회원가입 되었습니다.",
-              buttons: ["OK"]
-            })
-            .then(a => a.present());
-
+      this.REGISTER({ data, headers })
+        .then(() => {
+          showAlert.success('Welcome !', '회원가입 되었습니다')
           this.$router.push({ name: "Login" });
-        });
+        })
     }
   }
 };
