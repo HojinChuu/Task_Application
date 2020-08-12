@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import LoginForm from "../components/Login/LoginForm";
+import LoginForm from "../components/Login/LoginForm"
 
 export default {
   name: "Login",
   components: { LoginForm }
-};
+}
 </script>

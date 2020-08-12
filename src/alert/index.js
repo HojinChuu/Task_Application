@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 const showAlert = {
 	error(title, text) {
@@ -17,4 +17,4 @@ const showAlert = {
 	}
 }
 
-export default showAlert;
+export default showAlert

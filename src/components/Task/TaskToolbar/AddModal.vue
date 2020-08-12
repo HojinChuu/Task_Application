@@ -9,9 +9,7 @@
       <form @submit="onSubmit">
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
           <ion-item>
-            <ion-label position="stacked"
-              >Title <ion-text color="danger">*</ion-text></ion-label
-            >
+            <ion-label position="stacked">Title <ion-text color="danger">*</ion-text></ion-label>
             <ion-input
               :value="title"
               @input="title = $event.target.value"
@@ -39,9 +37,7 @@
           </ion-item>
         </ion-list>
         <div class="ion-padding">
-          <ion-button expand="block" type="submit" class="ion-no-margin"
-            >ADD</ion-button
-          >
+          <ion-button expand="block" type="submit" class="ion-no-margin">ADD</ion-button>
         </div>
       </form>
     </ion-content>
@@ -50,8 +46,9 @@
 </template>
 
 <script>
-import moment from "moment";
-import axios from "axios";
+import { mapActions, mapGetters } from "vuex"
+import showAlert from '../../../alert'
+import moment from "moment"
 
 export default {
   name: "AddModal",
@@ -59,59 +56,43 @@ export default {
     return {
       title: "",
       description: ""
-    };
+    }
   },
   computed: {
+    ...mapGetters([' accessToken ']),
     current_date() {
-      return moment().format("YYYY-MM-DD");
+      return moment().format("YYYY-MM-DD")
     },
     max_date() {
-      return moment()
-        .add(3, "years")
-        .format("YYYY-MM-DD");
+      return moment().add(3, "years").format("YYYY-MM-DD")
     }
   },
   methods: {
-    async onSubmit(e) {
+    ...mapActions([ 'ADD_TASK' ]),
+    onSubmit(e) {
       e.preventDefault();
-      this.deadline = moment(e.target[2].defaultValue).format(
-        "DD/MM/YYYY HH:mm"
-      );
-
+      this.deadline = moment(e.target[2].defaultValue).format("DD/MM/YYYY HH:mm")
       const headers = {
-        Authorization: this.access_token,
+        Authorization: this.accessToken,
         "Content-Type": "application/json"
-      };
-
+      }
       const data = {
         title: this.title,
         description: this.description,
         deadline: this.deadline,
         completed: "N"
-      };
+      }
 
-      const response = await axios.post(
-        "http://localhost/restapi/tasks",
-        data,
-        { headers }
-      );
-
-      this.$ionic.alertController
-        .create({
-          header: "Good !",
-          message: "새로운 Task를 만들었습니다.",
-          buttons: ["OK"]
-        })
-        .then(a => a.present());
-      this.$ionic.modalController.dismiss();
-      // await this.$router.go();
-      setTimeout(() => {
-        history.go();
-      }, 500);
+      this.ADD_TASK({data, headers}).then(() => {
+        showAlert.success('Good', 'Created New Task !', 'success')
+      })
+      this.$ionic.modalController.dismiss()
+      setTimeout(() => { history.go() }, 500)
     },
+
     closeModal() {
-      return this.$ionic.modalController.dismiss();
+      return this.$ionic.modalController.dismiss()
     }
   }
-};
+}
 </script>

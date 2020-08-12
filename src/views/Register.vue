@@ -13,12 +13,10 @@
 </template>
 
 <script>
-import RegisterForm from "../components/Register/RegisterForm";
+import RegisterForm from "../components/Register/RegisterForm"
 
 export default {
   name: "Register",
   components: { RegisterForm }
-};
+}
 </script>
-
-<style></style>

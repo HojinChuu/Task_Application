@@ -5,32 +5,25 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapGetters } from "vuex"
+import showAlert from '../../../alert'
 
 export default {
   name: "Logout",
-  props: ["access_token", "session_id"],
+  computed: {
+    ...mapGetters([ 'accessToken', 'sessionID' ])
+  },
   methods: {
+    ...mapActions([ 'LOGOUT' ]),
     logout() {
-      const headers = { Authorization: this.access_token };
+      const headers = { Authorization: this.accessToken }
+      const session_id = this.sessionID
 
-      axios
-        .delete(`http://localhost/restapi/sessions/${this.session_id}`, {
-          headers
-        })
-        .then(response => {
-          this.$ionic.alertController
-            .create({
-              header: "Bye !",
-              message: "로그아웃 되었습니다.",
-              buttons: ["OK"]
-            })
-            .then(a => a.present());
-
-          sessionStorage.removeItem("userinfo");
-          this.$router.push({ name: "Login" });
-        });
+      this.LOGOUT({session_id, headers}).then(() => {
+        showAlert('Bye', 'Logout', 'success')
+        this.$router.push({ name: "Login" })
+      })
     }
   }
-};
+}
 </script>

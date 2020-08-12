@@ -3,12 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ task_info.id }}번째 할 일</ion-title>
-        <ion-button
-          @click="isEdit = !isEdit"
-          slot="end"
-          size="small"
-          color="secondary"
-        >
+        <ion-button @click="isEdit = !isEdit" slot="end" size="small" color="secondary">
           <span v-if="isEdit === true">돌아가기</span>
           <span v-else>편집</span>
         </ion-button>
@@ -87,8 +82,9 @@
 </template>
 
 <script>
-import moment from "moment";
-import axios from "axios";
+import { mapActions } from "vuex"
+import showAlert from '../../alert'
+import moment from "moment"
 
 export default {
   name: "InfoModal",
@@ -99,60 +95,44 @@ export default {
       completed: "",
       description: "",
       deadline: ""
-    };
+    }
   },
   computed: {
     current_date() {
-      return moment().format("YYYY-MM-DD");
+      return moment().format("YYYY-MM-DD")
     },
     max_date() {
-      return moment()
-        .add(3, "years")
-        .format("YYYY-MM-DD");
+      return moment().add(3, "years").format("YYYY-MM-DD")
     }
   },
   methods: {
+    ...mapActions([ 'UPDATE_TASK' ]),
     closeModal() {
-      this.isEdit = false;
-      return this.$ionic.modalController.dismiss();
+      this.isEdit = false
+      return this.$ionic.modalController.dismiss()
     },
     onSubmit(e) {
-      e.preventDefault();
-      this.deadline = moment(e.target[1].defaultValue).format(
-        "DD/MM/YYYY HH:mm"
-      );
+      e.preventDefault()
+      this.deadline = moment(e.target[1].defaultValue).format("DD/MM/YYYY HH:mm")
 
       const headers = {
         Authorization: this.access_token,
         "Content-Type": "application/json"
-      };
-
+      }
       const data = {
         title: this.title,
         description: this.description,
         deadline: this.deadline,
         completed: this.completed
-      };
+      }
+      const task_id = this.task_info.id
 
-      axios
-        .patch(`http://localhost/restapi/tasks/${this.task_info.id}`, data, {
-          headers
-        })
-        .then(response => {
-          this.$ionic.alertController
-            .create({
-              header: "Good !",
-              message: "Edited Task",
-              buttons: ["OK"]
-            })
-            .then(a => a.present());
-
-          this.$ionic.modalController.dismiss();
-        })
-        .then(() => {
-          this.$router.go();
-        });
+      this.UPDATE_TASK({task_id, data, headers}).then(() => {
+        showAlert.success('Good', 'Updated Task', 'success')
+        this.$ionic.modalController.dismiss()
+        this.$router.go()
+      })
     }
   }
-};
+}
 </script>

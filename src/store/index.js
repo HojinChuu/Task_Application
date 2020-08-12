@@ -1,5 +1,5 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from "vue"
+import Vuex from "vuex"
 import state     from './state'
 import getters   from './getters'
 import mutations from './mutations'
@@ -13,6 +13,11 @@ const store = new Vuex.Store({
   mutations,
   actions,
   modules: {}
-});
+})
 
-export default store;
+if(sessionStorage.key('tokenInfo')) {
+  const tokenInfo = sessionStorage.getItem('tokenInfo')
+  store.commit('LOGIN', JSON.parse(tokenInfo))
+}
+
+export default store

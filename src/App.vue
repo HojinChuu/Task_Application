@@ -7,8 +7,8 @@
 </template>
 
 <style>
-a {
-  text-decoration: none;
-  color: black;
-}
+  a {
+    text-decoration: none;
+    color: black;
+  }
 </style>

@@ -6,7 +6,6 @@ import Task from "../views/Task.vue";
 
 Vue.use(IonicVueRouter);
 
-// 임시 가드
 const requireAuth = (to, from, next) => {
   (sessionStorage.key("userinfo") ? true : false) ? next() : history.go(-1);
 };
