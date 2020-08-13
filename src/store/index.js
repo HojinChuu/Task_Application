@@ -8,11 +8,11 @@ import actions   from './actions'
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  modules: {},
   state,
   getters,
   mutations,
-  actions,
-  modules: {}
+  actions
 })
 
 if(sessionStorage.key('tokenInfo')) {

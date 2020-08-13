@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapActions } from "vuex"
 import showAlert from '../../../alert'
 import moment from "moment"
 
@@ -59,7 +59,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([' accessToken ']),
     current_date() {
       return moment().format("YYYY-MM-DD")
     },
@@ -73,7 +72,7 @@ export default {
       e.preventDefault();
       this.deadline = moment(e.target[2].defaultValue).format("DD/MM/YYYY HH:mm")
       const headers = {
-        Authorization: this.accessToken,
+        "Authorization": this.accessToken,
         "Content-Type": "application/json"
       }
       const data = {
@@ -85,9 +84,9 @@ export default {
 
       this.ADD_TASK({data, headers}).then(() => {
         showAlert.success('Good', 'Created New Task !', 'success')
+        this.$ionic.modalController.dismiss()
+        setTimeout(() => { history.go() }, 500)
       })
-      this.$ionic.modalController.dismiss()
-      setTimeout(() => { history.go() }, 500)
     },
 
     closeModal() {

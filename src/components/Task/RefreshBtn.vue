@@ -19,7 +19,7 @@ export default {
     
     refreshTokenClick() {
       const headers = {
-        Authorization: this.accessToken,
+        "Authorization": this.accessToken,
         "Content-Type": "application/json"
       };
       const data = { refresh_token: this.refreshToken }

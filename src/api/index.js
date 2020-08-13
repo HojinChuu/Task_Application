@@ -39,10 +39,10 @@ export const task = {
     return serverRequest('get', '/tasks', undefined, tasks_info.headers)
   },
   getCompleted(completed_info) {
-    return serverRequest('get', '/complete', undefined, completed_info.headers)
+    return serverRequest('get', '/tasks/complete', undefined, completed_info.headers)
   },
   getInCompleted(inCompleted_info) {
-    return serverRequest('get', '/incomplete', undefined, inCompleted_info.headers)
+    return serverRequest('get', '/tasks/incomplete', undefined, inCompleted_info.headers)
   },
   removeTask(task_info) {
     return serverRequest('delete', `/tasks/${task_info.task_id}`, undefined, task_info.headers)

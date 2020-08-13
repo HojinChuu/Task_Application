@@ -37,22 +37,22 @@ export default {
     ...mapGetters([ 'accessToken' ])
   },
   mounted() {
-    const headers = { Authorization: this.accessToken }
+    const headers = { "Authorization": this.accessToken }
     this.FETCH_TASKS({headers})
   },
   methods: {
     ...mapActions([ 'FETCH_TASKS', 'FETCH_COMPLETED', 'FETCH_INCOMPLETED' ]),
 
     getAll() {
-      const headers = { Authorization: this.accessToken }
+      const headers = { "Authorization": this.accessToken }
       this.FETCH_TASKS({headers})
     },
     getCompleted() {
-      const headers = { Authorization: this.accessToken }
+      const headers = { "Authorization": this.accessToken }
       this.FETCH_COMPLETED({headers})
     },
     getIncompleted() {
-      const headers = { Authorization: this.accessToken }
+      const headers = { "Authorization": this.accessToken }
       this.FETCH_INCOMPLETED({headers})
     }
   }

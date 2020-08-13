@@ -53,6 +53,7 @@ export default {
         .create({
           component: InfoModal,
           componentProps: {
+            parent: this,
             data: {
               task_info: this.task,
               access_token: this.accessToken
@@ -61,7 +62,7 @@ export default {
         }).then(m => m.present())
     },
     removeTask() {
-      const headers = { Authorization: this.accessToken }
+      const headers = { "Authorization": this.accessToken }
       const task_id = this.task.id
 
       this.REMOVE_TASK({task_id, headers}).then(() => {
@@ -86,7 +87,7 @@ export default {
       }
 
       const headers = {
-        Authorization: this.accessToken,
+        "Authorization": this.accessToken,
         "Content-Type": "application/json"
       }
       const data = { completed: this.sendCompleted };

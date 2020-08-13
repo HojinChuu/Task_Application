@@ -116,7 +116,7 @@ export default {
       this.deadline = moment(e.target[1].defaultValue).format("DD/MM/YYYY HH:mm")
 
       const headers = {
-        Authorization: this.access_token,
+        "Authorization": this.access_token,
         "Content-Type": "application/json"
       }
       const data = {

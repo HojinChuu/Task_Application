@@ -43,7 +43,7 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       (this.username == "" || this.password == "")
-      ? this.showAlert() 
+      ? showAlert.error('Oops..', "모두 입력해주세요")
       : this.login()
 
       this.username = ""
