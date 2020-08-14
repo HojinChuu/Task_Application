@@ -6,6 +6,7 @@
           :checked="completedValue"
           @ionChange="completedToggle"
         ></ion-toggle>
+          
         <div @click="openModal" class="ion-padding-start">
           <ion-label ref="completedLine">{{ task.title }}</ion-label>
         </div>

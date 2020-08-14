@@ -2,6 +2,7 @@
   <div>
     <ion-header>
       <ion-toolbar>
+        <ion-button slot="start" size="small" color="secondary">이미지 추가</ion-button>
         <ion-title v-if="isEdit === true">수정하기</ion-title>
         <ion-title v-else>상세보기</ion-title>
         <ion-button @click="isEdit = !isEdit" slot="end" size="small" color="secondary">
@@ -14,12 +15,16 @@
     <ion-content fullscreen>
       <form @submit="onSubmit">
         <ion-list class="full">
+
+          <ion-slides pager="true" :options="slideOpts">
+            <ImageSlider />
+          </ion-slides>
+          
           <ion-item-divider>
             <ion-label>
               Todo Detail
             </ion-label>
           </ion-item-divider>
-
           <ion-item>
             <ion-label>Todo Name : </ion-label>
             <ion-label v-if="titleCondition" @click="titleEdit = true">{{ task_info.title }}</ion-label>
@@ -68,6 +73,7 @@
         >
       </form>
     </ion-content>
+    
     <ion-button color="primary" @click="closeModal">Back</ion-button>
   </div>
 </template>
@@ -75,10 +81,12 @@
 <script>
 import { mapActions } from "vuex"
 import showAlert from '../../alert'
+import ImageSlider from './ImageSlider';
 import moment from "moment"
 
 export default {
   name: "InfoModal",
+  components: { ImageSlider },
   data() {
     return {
       isEdit: false,
@@ -87,7 +95,11 @@ export default {
       deadlineEdit: false,
       title: "",
       description: "",
-      deadline: ""
+      deadline: "",
+      slideOpts: {
+        initialSlide: 1,
+        speed: 400
+      }
     }
   },
   computed: {

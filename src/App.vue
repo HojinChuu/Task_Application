@@ -11,4 +11,7 @@
     text-decoration: none;
     color: black;
   }
+  .swiper-pagination {
+    display: none;
+  }
 </style>

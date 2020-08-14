@@ -35,6 +35,11 @@
               :max="max_date"
             ></ion-datetime>
           </ion-item>
+          <ion-card>
+            <ion-card-header>
+              <input type="file" name="" id="">
+            </ion-card-header>
+          </ion-card>
         </ion-list>
         <div class="ion-padding">
           <ion-button expand="block" type="submit" class="ion-no-margin">ADD</ion-button>
