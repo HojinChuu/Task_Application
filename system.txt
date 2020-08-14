@@ -10,8 +10,13 @@ GET http://localhost/restapi/tasks/incomplete  - get incompleted
 GET http://localhost/restapi/tasks/page/1  -  get task paginate
 PATCH http://localhost/restapi/tasks/3  - update task
 PATCH http://localhost/restapi/sessions/1  - update session 
-DELETE http://localhost/restapi/sessions/3  - delete session 
-- image 추가(예정) -
+DELETE http://localhost/restapi/sessions/3  - delete session
+
+POST http://localhost/restapi/tasks/50/images - create image
+GET http://localhost/restapi/tasks/50/images/7/attributes - get image attributes
+GET http://localhost/restapi/tasks/50/images/7 - get image file
+DELETE http://localhost/restapi/tasks/50/images/7 - delete image
+PATCH http://localhost/restapi/tasks/50/images/7/attributes - update image
 
 [ Flow ]
 (o) 시작 - Login page 
@@ -27,8 +32,6 @@ DELETE http://localhost/restapi/sessions/3  - delete session
 (o) PWA
 (o) 할일 완료 토글
 (o) VUEX
-
-(x) 알림
 
 [ view (component) ]ㅣ
 Login ( login form )

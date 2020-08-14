@@ -2,10 +2,11 @@
   <div>
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ task_info.id }}번째 할 일</ion-title>
+        <ion-title v-if="isEdit === true">수정하기</ion-title>
+        <ion-title v-else>상세보기</ion-title>
         <ion-button @click="isEdit = !isEdit" slot="end" size="small" color="secondary">
           <span v-if="isEdit === true">돌아가기</span>
-          <span v-else>편집</span>
+          <span v-else>모두편집</span>
         </ion-button>
       </ion-toolbar>
     </ion-header>
@@ -21,7 +22,7 @@
 
           <ion-item>
             <ion-label>Todo Name : </ion-label>
-            <ion-label v-if="isEdit === false">{{ task_info.title }}</ion-label>
+            <ion-label v-if="titleCondition" @click="titleEdit = true">{{ task_info.title }}</ion-label>
             <ion-input
               v-else
               :value="title"
@@ -33,7 +34,7 @@
           </ion-item>
           <ion-item>
             <ion-label>Deadline : </ion-label>
-            <ion-label v-if="!isEdit">{{ task_info.deadline }}</ion-label>
+            <ion-label v-if="deadlineCondition" @click="deadlineEdit = true">{{ task_info.deadline }}</ion-label>
             <ion-datetime
               v-else
               display-format="YYYY-MM-DD HH:mm"
@@ -41,35 +42,25 @@
               :max="max_date"
             ></ion-datetime>
           </ion-item>
-          <ion-item>
-            <ion-label>Completed : </ion-label>
-            <ion-label v-if="!isEdit">{{ task_info.completed }}</ion-label>
-            <ion-input
-              v-else
-              :value="completed"
-              @input="completed = $event.target.value"
-              required
-              type="text"
-            ></ion-input>
-          </ion-item>
 
           <ion-item-divider>
             <ion-label>Description</ion-label>
           </ion-item-divider>
           <ion-item>
-            <ion-label v-if="!isEdit">{{ task_info.description }}</ion-label>
+            <ion-label v-if="descriptionCondition" @click="descriptionEdit = true">{{ task_info.description }}</ion-label>
             <ion-textarea
               v-else
               :value="description"
               @input="description = $event.target.value"
               rows="6"
               cols="20"
+              required
               placeholder="Enter any notes here..."
             ></ion-textarea>
           </ion-item>
         </ion-list>
         <ion-button
-          v-show="isEdit"
+          v-show="buttonCondition"
           expand="block"
           color="secondary"
           type="submit"
@@ -91,8 +82,10 @@ export default {
   data() {
     return {
       isEdit: false,
+      titleEdit: false,
+      descriptionEdit: false,
+      deadlineEdit: false,
       title: "",
-      completed: "",
       description: "",
       deadline: ""
     }
@@ -103,10 +96,28 @@ export default {
     },
     max_date() {
       return moment().add(3, "years").format("YYYY-MM-DD")
+    },
+    titleCondition() {
+      return this.isEdit === false && this.titleEdit === false
+    },
+    descriptionCondition() {
+      return this.isEdit === false && this.descriptionEdit === false
+    },
+    deadlineCondition() {
+      return this.isEdit === false && this.deadlineEdit === false
+    },
+    buttonCondition() {
+      return this.isEdit === true || this.titleEdit === true || this.descriptionEdit === true || this.deadlineEdit === true
     }
   },
   methods: {
-    ...mapActions([ 'UPDATE_TASK' ]),
+    ...mapActions([ 'UPDATE_TASK', 'FETCH_TASKS' ]),
+    modeChange() {
+      this.isEdit = !this.isEdit
+      this.titleEdit = false;
+      this.deadlineEdit = false;
+      this.descriptionEdit = false;
+    },
     closeModal() {
       this.isEdit = false
       return this.$ionic.modalController.dismiss()
@@ -119,18 +130,35 @@ export default {
         "Authorization": this.access_token,
         "Content-Type": "application/json"
       }
-      const data = {
-        title: this.title,
-        description: this.description,
-        deadline: this.deadline,
-        completed: this.completed
+
+      let data = {}
+
+      if (this.isEdit === true || (this.titleEdit === true && this.deadlineEdit === true && this.descriptionEdit === true)) {
+        data.title = this.title
+        data.deadline = this.deadline
+        data.description = this.description
+      } else if (this.titleEdit === true && this.deadlineEdit === true) {
+        data.title = this.title
+        data.deadline = this.deadline
+      } else if (this.titleEdit === true && this.descriptionEdit === true) {
+        data.title = this.title
+        data.description = this.description
+      } else if (this.deadlineEdit === true && this.descriptionEdit === true) {
+        data.deadline = this.deadline
+        data.description = this.description
+      } else if (this.titleEdit) {
+        data.title = this.title
+      } else if (this.descriptionEdit) {
+        data.description = this.description
+      } else if (this.deadlineEdit) {
+        data.deadline = this.deadline
       }
+      
       const task_id = this.task_info.id
 
       this.UPDATE_TASK({task_id, data, headers}).then(() => {
-        showAlert.success('Good', 'Updated Task', 'success')
         this.$ionic.modalController.dismiss()
-        this.$router.go()
+        this.FETCH_TASKS({headers})
       })
     }
   }

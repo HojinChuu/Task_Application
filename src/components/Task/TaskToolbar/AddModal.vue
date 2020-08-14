@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'ADD_TASK' ]),
+    ...mapActions([ 'ADD_TASK', 'FETCH_TASKS' ]),
     onSubmit(e) {
       e.preventDefault();
       this.deadline = moment(e.target[2].defaultValue).format("DD/MM/YYYY HH:mm")
@@ -83,9 +83,10 @@ export default {
       }
 
       this.ADD_TASK({data, headers}).then(() => {
-        showAlert.success('Good', 'Created New Task !', 'success')
+        // showAlert.success('Good', 'Created New Task !', 'success')
         this.$ionic.modalController.dismiss()
-        setTimeout(() => { history.go() }, 500)
+        const headers = { "Authorization": this.accessToken }
+        this.FETCH_TASKS({headers})
       })
     },
 

@@ -12,7 +12,7 @@
       </ion-row>
     </ion-grid>
     <ion-button color="danger" @click="removeTask">
-      <ion-icon name="trash-outline" size="small"></ion-icon>
+      <i class="fas fa-trash-alt fa-lg"></i>
     </ion-button>
   </ion-item>
 </template>
@@ -47,7 +47,7 @@ export default {
       this.$refs.completedLine.style.textDecorationStyle = "wavy"
   },
   methods: {
-    ...mapActions([ 'REMOVE_TASK', 'COMPLETE_TOGGLE' ]),
+    ...mapActions([ 'REMOVE_TASK', 'COMPLETE_TOGGLE', 'FETCH_TASKS' ]),
     openModal() {
       return this.$ionic.modalController
         .create({
@@ -66,8 +66,7 @@ export default {
       const task_id = this.task.id
 
       this.REMOVE_TASK({task_id, headers}).then(() => {
-        showAlert.success('Good', 'Task Deleted', 'success')
-        this.$router.go()
+        this.FETCH_TASKS({headers})
       })
     },
     completedToggle() {

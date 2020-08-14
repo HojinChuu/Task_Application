@@ -1,7 +1,6 @@
 <template>
   <ion-button @click="openModal">
-    <ion-icon name="add-circle-outline" size="small"></ion-icon>
-    <small>ADD TASK</small>
+    <i class="fas fa-plus-circle fa-lg"></i>
   </ion-button>
 </template>
 

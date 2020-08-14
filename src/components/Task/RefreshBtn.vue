@@ -1,13 +1,14 @@
 <template>
   <ion-fab @click="refreshTokenClick" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="sync-outline"></ion-icon>
+      <i class="fas fa-sync-alt fa-2x"></i>
     </ion-fab-button>
   </ion-fab>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex"
+import showAlert from '../../alert'
 
 export default {
   name: "RefreshBtn",
@@ -31,7 +32,7 @@ export default {
       }).then(loading => { return loading.present() })
       .then(() => {
         this.REFRESH_TOKEN({data, session_id, headers}).then(() => {
-          this.$router.go();
+          showAlert.success('Good', 'Updated session', 'success')
         })
       })
     }
