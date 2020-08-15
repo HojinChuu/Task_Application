@@ -17,7 +17,9 @@
         <ion-list class="full">
 
           <ion-slides pager="true" :options="slideOpts">
-            <ImageSlider />
+            <ImageSlider 
+            v-for="image in task_info.images" 
+            :key="image.id" :image="image" :task_info="task_info"/>
           </ion-slides>
           
           <ion-item-divider>
@@ -121,6 +123,9 @@ export default {
     buttonCondition() {
       return this.isEdit === true || this.titleEdit === true || this.descriptionEdit === true || this.deadlineEdit === true
     }
+  },
+  mounted() {
+      console.log(this.task_info.images)
   },
   methods: {
     ...mapActions([ 'UPDATE_TASK', 'FETCH_TASKS' ]),

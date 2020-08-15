@@ -55,5 +55,17 @@ export const task = {
   },
   addTask(task_info) {
     return serverRequest('post', '/tasks', task_info.data, task_info.headers)
+  },
+  createImage(image_info) {
+    return serverRequest('post', `/tasks/${image_info.task_id}/images`, image_info.imageData, image_info.headers)
+  },
+  // getImages(images_info) {
+  //   return serverRequest('get', `/tasks/${images_info.task_id}/images/${images_info.image_id}/attributes`, undefined, images_info.headers)
+  // },
+  getImageFile(image_info) {
+    return serverRequest('get', `/tasks/${image_info.task_id}/images/${image_info.image_id}`, undefined, image_info.headers)
+  },
+  removeImage(image_info) {
+    return serverRequest('delete', `/tasks/${image_info.task_id}/images/${image_info.image_id}`, undefined, image_info.headers)
   }
 }

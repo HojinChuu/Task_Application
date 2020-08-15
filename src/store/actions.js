@@ -57,6 +57,15 @@ const actions = {
   },
   ADD_TASK(_, task_info) {
     return api.task.addTask(task_info)
+  },
+  ADD_IMAGE(_, image_info) {
+    return api.task.createImage(image_info)
+  },
+  FETCH_IMAGE_FILE(_, image_info) {
+    return api.task.getImageFile(image_info)
+  },
+  REMOVE_IMAGE(_, image_info) {
+    return api.task.removeImage(image_info)
   }
 }
 

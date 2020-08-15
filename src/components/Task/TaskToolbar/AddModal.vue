@@ -35,11 +35,6 @@
               :max="max_date"
             ></ion-datetime>
           </ion-item>
-          <ion-card>
-            <ion-card-header>
-              <input type="file" name="" id="">
-            </ion-card-header>
-          </ion-card>
         </ion-list>
         <div class="ion-padding">
           <ion-button expand="block" type="submit" class="ion-no-margin">ADD</ion-button>
@@ -54,13 +49,16 @@
 import { mapActions } from "vuex"
 import showAlert from '../../../alert'
 import moment from "moment"
+import Swal from 'sweetalert2'
+import AddImage from './AddImage'
 
 export default {
   name: "AddModal",
   data() {
     return {
       title: "",
-      description: ""
+      description: "",
+      task_id: ""
     }
   },
   computed: {
@@ -87,11 +85,38 @@ export default {
         completed: "N"
       }
 
-      this.ADD_TASK({data, headers}).then(() => {
-        // showAlert.success('Good', 'Created New Task !', 'success')
-        this.$ionic.modalController.dismiss()
-        const headers = { "Authorization": this.accessToken }
-        this.FETCH_TASKS({headers})
+      this.ADD_TASK({data, headers}).then((res) => {
+        this.task_id = res.data.tasks[0].id
+        Swal.fire({
+          text: '이미지도 추가하시겠어요?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes',
+        })
+        .then((result) => {
+          if (result.value) {
+            return this.$ionic.modalController
+            .create({ 
+              component: AddImage,
+              componentProps: {
+                parent: this,
+                data: {
+                  accessToken: this.accessToken,
+                  task_id: this.task_id
+                }
+              }
+            })
+            .then(m => m.present())
+          } 
+          
+          else if (result.dismiss === Swal.DismissReason.cancel) {
+            this.$ionic.modalController.dismiss()
+            const headers = { "Authorization": this.accessToken }
+            this.FETCH_TASKS({headers})
+          }
+        })
       })
     },
 
