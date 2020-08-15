@@ -26,31 +26,25 @@ export default {
     ...mapGetters([ 'accessToken' ])
   },
   mounted() {
-    const headers = {
-      "Authorization": this.accessToken
-    }
+    const headers = { "Authorization": this.accessToken }
     const task_id = this.task_info.id
     const image_id = this.image.id
 
     this.FETCH_IMAGE_FILE({task_id, image_id, headers})
     .then((res) => {
       this.imageFile = res
-      console.log(this.imageFile)
     })
   },
   methods: {
-    ...mapActions([ 'FETCH_IMAGE_FILE', 'REMOVE_IMAGE', 'FETCH_TASKS' ]),
-    
+    ...mapActions([ 'FETCH_IMAGE', 'FETCH_IMAGE_FILE', 'REMOVE_IMAGE' ]),
     remove() {
-      const headers = {
-        "Authorization": this.accessToken
-      }
+      const headers = { "Authorization": this.accessToken }
       const task_id = this.task_info.id
       const image_id = this.image.id
 
       this.REMOVE_IMAGE({task_id, image_id, headers})
       .then(() => {
-        // refresh
+        this.$router.go();
       })
     }
   }

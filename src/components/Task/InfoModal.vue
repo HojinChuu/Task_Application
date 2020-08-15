@@ -2,7 +2,7 @@
   <div>
     <ion-header>
       <ion-toolbar>
-        <ion-button slot="start" size="small" color="secondary">이미지 추가</ion-button>
+        <ion-button slot="start" size="small" color="secondary" @click="addImage">이미지 추가</ion-button>
         <ion-title v-if="isEdit === true">수정하기</ion-title>
         <ion-title v-else>상세보기</ion-title>
         <ion-button @click="isEdit = !isEdit" slot="end" size="small" color="secondary">
@@ -81,14 +81,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import showAlert from '../../alert'
 import ImageSlider from './ImageSlider';
 import moment from "moment"
+import AddImage from './TaskToolbar/AddImage'
 
 export default {
   name: "InfoModal",
-  components: { ImageSlider },
+  components: { ImageSlider, AddImage },
   data() {
     return {
       isEdit: false,
@@ -105,6 +106,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([ 'accessToken' ]),
     current_date() {
       return moment().format("YYYY-MM-DD")
     },
@@ -177,6 +179,20 @@ export default {
         this.$ionic.modalController.dismiss()
         this.FETCH_TASKS({headers})
       })
+    },
+    addImage() {
+      return this.$ionic.modalController
+      .create({ 
+        component: AddImage,
+        componentProps: {
+          parent: this,
+          data: {
+            accessToken: this.accessToken,
+            task_id: this.task_info.id
+          }
+        }
+      })
+      .then(m => m.present())
     }
   }
 }
